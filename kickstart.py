@@ -49,7 +49,7 @@ to the `/etc/shadow` file.
 # Pass the variables to the Kickstart file
 with open(KICKSTART_FILE, "r") as f:
     t = Template(f.read())
-    body = t.safe_substitute(username=USER_NAME, userpass=USER_PASS, fdepass=FDE_PASS)
+    body = t.safe_substitute(username=USER_NAME, userpass=USER_PASS, fdepass=FDE_PASS, hostname=HOST_NAME)
 
 # HTTP server for the installation media to pull the Kickstart file from
 with socketserver.TCPServer((LISTEN_ADDR, LISTEN_PORT), KickstartHandler) as httpd:

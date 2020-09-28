@@ -40,7 +40,7 @@ lang en_US.UTF-8
 keyboard --vckeymap=us --xlayouts='us'
 
 # Network information
-network  --bootproto=dhcp --hostname=lt.localdomain --onboot=yes
+network  --bootproto=dhcp --hostname=$hostname.localdomain --onboot=yes
 
 # System timezone
 timezone America/New_York --isUtc
@@ -49,7 +49,7 @@ timezone America/New_York --isUtc
 rootpw --lock
 
 # Create user account
-user --groups=wheel --name=$username --password=$userpass --iscrypted
+user --groups=wheel --name=$username --password="$userpass" --iscrypted
 
 # Perform installation in text mode
 text

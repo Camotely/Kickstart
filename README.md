@@ -20,14 +20,16 @@ KICKSTART_FILE = "example.ks"
 USER_NAME = "user"
 USER_PASS = "password"
 FDE_PASS = "fde123"
+HOST_NAME = "localhost"
 ```
 
 `LISTEN_ADDR` is the address to listen on for the python HTTP server.  By default it is set globally, and it is likely not necessary to change.  
 `LISTEN_PORT` is the port to listen on for the python HTTP server.  By default it is set to `8080`, but can be changed as necessary.  
 `KICKSTART_FILE` is the file you want to use to substitute the sensitive information into and serve via the python HTTP server.  
-`USER_NAME` is the name to pass into the Kickstart file.  
+`USER_NAME` is the username to pass into the Kickstart file.  
 `USER_PASS` is the password to pass into the Kickstart file.  `kickstart.py` will salt and convert the password into an MD5 hash before passing into the Kickstart file.  
-`FDE_PASS` is the ***OPTIONAL*** full-disk encryption password for the Kickstart file.  If a password is not provided, the options will not be passed into the Kickstart file.  If the password is provided, the options `--encrypted --luks-version=luks2 --passphrase=` will be passed into the Kickstart file.
+`FDE_PASS` is the ***OPTIONAL*** full-disk encryption password for the Kickstart file.  If a password is not provided, the options will not be passed into the Kickstart file.  If the password is provided, the options `--encrypted --luks-version=luks2 --passphrase=` will be passed into the Kickstart file.  
+`HOST_NAME` is the device name to pass into the Kickstart file.
 
 ## `fedora.ks`
 My current work-in-progress Kickstart file.
@@ -41,6 +43,11 @@ My current work-in-progress Kickstart file.
 * Clone this repository:  
 `git clone https://github.com/dirwalk/Kickstart.git`  
 `cd Kickstart`
+* Copy or rename the `secrets.example.py` to `secrets.py`.
+    * Copy:
+      * `cp secrets.example.py secrets.py`
+    * Rename:
+      * `mv secrets.example.py secrets.py`
 * Modify the variables in `secrets.py`.
   * LISTEN_ADDR
     * `sed -i 's/0.0.0.0/NEW_IP/' secrets.py`
@@ -54,6 +61,8 @@ My current work-in-progress Kickstart file.
     * `sed -i 's/password/NEW_PASSWORD/' secrets.py`
   * FDE_PASS
     * `sed -i 's/fde123/NEW_FDE/' secrets.py`
+  * HOST_NAME  
+    * `sed -i 's/localhost/NEW_HOSTNAME/' secrets.py`
 * Run `kickstart.py` to pass into your Kickstart file and run the python HTTP server.  
 `python3 kickstart.py`
 * At boot screen of Fedora's installation media, press TAB and append ***BEFORE*** `quiet`.  
