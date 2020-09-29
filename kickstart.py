@@ -30,6 +30,7 @@ Unsuccessful:
 127.0.0.1 - - [31/Jan/2020 00:00:00] "GET /example.ks HTTP/1.1" 404
 """
 
+
 # Full disk encryption
 if FDE_PASS:
     FDE_PASS = f'--encrypted --luks-version=luks2 --passphrase="{FDE_PASS}"'
@@ -46,10 +47,23 @@ file to allow for the installation to pass the full hash
 to the `/etc/shadow` file.
 """
 
+if BOOTLOADER_PASS:
+    BOOTLOADER_PASS = f"bootloader --password={BOOTLOADER_PASS}"
+"""
+Creates a password for grub2 encryption to utilize in the
+Kickstart file.  Utilizes grub SHA512-PBKDF2-HMAC post install.
+"""
+
 # Pass the variables to the Kickstart file
 with open(KICKSTART_FILE, "r") as f:
     t = Template(f.read())
-    body = t.safe_substitute(username=USER_NAME, userpass=USER_PASS, fdepass=FDE_PASS, hostname=HOST_NAME)
+    body = t.safe_substitute(
+        username=USER_NAME,
+        userpass=USER_PASS,
+        fdepass=FDE_PASS,
+        hostname=HOST_NAME,
+        blpass=BOOTLOADER_PASS,
+    )
 
 # HTTP server for the installation media to pull the Kickstart file from
 with socketserver.TCPServer((LISTEN_ADDR, LISTEN_PORT), KickstartHandler) as httpd:

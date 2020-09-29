@@ -30,6 +30,7 @@ HOST_NAME = "localhost"
 `USER_PASS` is the password to pass into the Kickstart file.  `kickstart.py` will salt and convert the password into an MD5 hash before passing into the Kickstart file.  
 `FDE_PASS` is the ***OPTIONAL*** full-disk encryption password for the Kickstart file.  If a password is not provided, the options will not be passed into the Kickstart file.  If the password is provided, the options `--encrypted --luks-version=luks2 --passphrase=` will be passed into the Kickstart file.  
 `HOST_NAME` is the device name to pass into the Kickstart file.
+`BOOTLOADER_PASS` is the ***OPTIONAL*** password protection for grub.
 
 ## `fedora.ks`
 My current work-in-progress Kickstart file.
@@ -63,6 +64,8 @@ My current work-in-progress Kickstart file.
     * `sed -i 's/fde123/NEW_FDE/' secrets.py`
   * HOST_NAME  
     * `sed -i 's/localhost/NEW_HOSTNAME/' secrets.py`
+  * BOOTLOADER_PASS
+    * `sed -i 's/bootloader/NEW_BOOTLOADER/' secrets.py`
 * Run `kickstart.py` to pass into your Kickstart file and run the python HTTP server.  
 `python3 kickstart.py`
 * At boot screen of Fedora's installation media, press TAB and append ***BEFORE*** `quiet`.  

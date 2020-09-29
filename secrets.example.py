@@ -5,3 +5,4 @@ USER_NAME = "user"
 USER_PASS = "password"
 FDE_PASS = "fde123"
 HOST_NAME = "localhost"
+BOOTLOADER_PASS = 'bootloader'
