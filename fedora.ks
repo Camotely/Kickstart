@@ -66,7 +66,7 @@ tlp
 %end
 
 %post
-git clone https://github.com/camotely/kickstart.git /tmp/Kickstart
+git clone https://github.com/camotely/kickstart.git /tmp/kickstart
 
 LIST=$(find /tmp/kickstart/scripts/ -type f)
 
