@@ -33,7 +33,7 @@ HOST_NAME = "localhost"
 `BOOTLOADER_PASS` is the ***OPTIONAL*** password protection for grub.
 
 ## `fedora.ks`
-My current work-in-progress Kickstart file.
+My current work-in-progress Kickstart file. This will automate the installation of my system, to include things like full-disk encryption and package installation.  This will also run standalone bash scripts in the `scripts` folder as a post-installation task. This is done to keep things modular and the Kickstart file clean.
 
 # Requirements:
 * Webserver with Python 3.5+ to host the Kickstart file.
