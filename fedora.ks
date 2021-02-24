@@ -6,20 +6,8 @@
 install
 
 # Repositories and Mirrorlists
-url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-32&arch=x86_64"
-repo --name=fedora-updates --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f32&arch=x86_64" --cost=0
-# RPMFusion Free
-repo --name=rpmfusion-free --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora-32&arch=x86_64" --includepkgs=rpmfusion-free-release
-repo --name=rpmfusion-free-updates --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora-updates-released-32&arch=x86_64" --cost=0
-repo --name=rpmfusion-free-tainted --mirrorlist="https://mirrors.rpmfusion.org/metalink?repo=free-fedora-tainted-32&arch=x86_64"
-# RPMFusion NonFree
-repo --name=rpmfusion-nonfree --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=nonfree-fedora-32&arch=x86_64" --includepkgs=rpmfusion-nonfree-release
-repo --name=rpmfusion-nonfree-updates --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=nonfree-fedora-updates-released-32&arch=x86_64" --cost=0
-repo --name=rpmfusion-nonfree-tainted --mirrorlist="https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-tainted-32&arch=x86_64"
-# VSCode
-repo --name=VSCode --install --baseurl="https://packages.microsoft.com/yumrepos/vscode" --cost=0
-# 1Password
-repo --name=1Password --install --baseurl="https://onepassword.s3.amazonaws.com/linux/rpm" --cost=0
+url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-33&arch=x86_64"
+repo --name=fedora-updates --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f33&arch=x86_64" --cost=0
 
 # Remove all existing partitions
 clearpart --all --drives=sda
@@ -69,28 +57,22 @@ xconfig --startxonboot
 $blpass
 
 %packages
--openssh-server
--avahi
--nss-mdns
--sssd*
--abrt*
-@base-x
-@core
+@^kde-desktop-environment
 @firefox
-@fonts
-@printing
-gnome-shell
-gnome-terminal
-gnome-tweaks
-nautilus
+@kde-apps
 vim
 git
 tlp
-code
-1password
 %end
 
 %post
-# Gnome graphical target setup
-systemctl set-default graphical.target
+git clone https://github.com/camotely/kickstart.git /tmp/Kickstart
+
+LIST=$(find /tmp/kickstart/scripts/ -type f)
+
+for i in ${LIST}
+do
+    bash $i
+done
+
 %end
