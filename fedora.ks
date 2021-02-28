@@ -57,15 +57,26 @@ xconfig --startxonboot
 $blpass
 
 %packages
-@^kde-desktop-environment
-@firefox
-@kde-apps
+-openssh-server
+-nss-mdns
+-sssd*
+-abrt*
+@base-x
+@core
+@fonts
+@printing
+gnome-shell
+gnome-terminal
+gnome-tweaks
+nautilus
 vim
 git
 tlp
 %end
 
 %post
+systemctl set-default graphical.target
+
 git clone https://github.com/camotely/kickstart.git /tmp/kickstart
 
 LIST=$(find /tmp/kickstart/scripts/ -type f)
