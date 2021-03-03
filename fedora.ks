@@ -72,6 +72,8 @@ nautilus
 vim
 git
 tlp
+htop
+nmap
 %end
 
 %post
